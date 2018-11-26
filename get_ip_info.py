@@ -10,19 +10,22 @@ def key_value_to_dict(inp_str):
 
     return result
 
-def get_geo_ip_data(ip_address, use_max_mind_geo_ip=True, geo_ip=None):
+def get_geo_ip_data(ip_address, use_max_mind_geo_ip=True, geo_ip=None, use_paid_version=False):
     country_code = ''
     city = ''
     state = ''
     postal_code = 0
     country_name = ''
     GEOIP_DB_PATH = 'PLACE YOUR GEOIP DATABASE PATH HERE'
+    GEOIP_FILE_NAME = 'GeoLiteCity.dat'
+    if use_paid_version:
+        GEOIP_FILE_NAME = 'GeoIPCity.dat'
     if ip_address != '':
         try:
             if use_max_mind_geo_ip:
                 if not geo_ip:
                     import pygeoip
-                    geo_ip = pygeoip.GeoIP(GEOIP_DB_PATH + '/GeoIPCity.dat')
+                    geo_ip = pygeoip.GeoIP(GEOIP_DB_PATH + '/' + GEOIP_FILE_NAME)
 
                 ip_addr_data = geo_ip.record_by_addr(ip_address)
             else:
